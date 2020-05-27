@@ -62,7 +62,7 @@ namespace Microsoft.AspNetCore.Hosting.StaticWebAssets
             {
                 var manifestPath = configuration.GetValue<string>(WebHostDefaults.StaticWebAssetsKey);
                 var filePath = manifestPath ?? ResolveRelativeToAssembly(environment);
-                
+
                 if (File.Exists(filePath))
                 {
                     return File.OpenRead(filePath);
@@ -84,18 +84,7 @@ namespace Microsoft.AspNetCore.Hosting.StaticWebAssets
         private static string ResolveRelativeToAssembly(IWebHostEnvironment environment)
         {
             var assembly = Assembly.Load(environment.ApplicationName);
-            return Path.Combine(Path.GetDirectoryName(GetAssemblyLocation(assembly)), $"{environment.ApplicationName}.StaticWebAssets.xml");
-        }
-
-        internal static string GetAssemblyLocation(Assembly assembly)
-        {
-            if (Uri.TryCreate(assembly.CodeBase, UriKind.Absolute, out var result) &&
-                result.IsFile && string.IsNullOrWhiteSpace(result.Fragment))
-            {
-                return result.LocalPath;
-            }
-
-            return assembly.Location;
+            return Path.Combine(Path.GetDirectoryName(assembly.Location), $"{environment.ApplicationName}.StaticWebAssets.xml");
         }
     }
 }
