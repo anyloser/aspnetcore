@@ -140,6 +140,8 @@ namespace Microsoft.AspNetCore.E2ETesting
                 opts.AddArgument("--headless");
             }
 
+            opts.AddArgument("--disable-dev-shm-usage");
+
             // Log errors
             opts.SetLoggingPreference(LogType.Browser, LogLevel.All);
 
